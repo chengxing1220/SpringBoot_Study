@@ -1,0 +1,17 @@
+server:
+  port: 8088 #指定端口号
+  servlet:
+    context-path: /study # 指定项目上下文路径
+
+# logback是springboot默认使用日志，所以不用配置能正常使用
+logging:
+  file:
+    path: logback.xml
+#开启调试模式，可以查看哪些自动配置生效了Positive(生效了)、Negative(没生效)
+debug: true
+
+#项目加载时排除哪些自动配置类(可能爆红但不影响功能)
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration

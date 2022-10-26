@@ -8,11 +8,12 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
-@SpringBootApplication
+//scanBasePackages属性:指定包扫描路径
+//exclude属性:如果发现不需要的特定自动配置类正在被应用可以使用@SpringBootApplication的exclude属性属性来禁用它们
+@SpringBootApplication(scanBasePackages = {"com.tellhow"})
 @Slf4j//日志系统采用  slf4j+logback
 public class SpringBootStudyApplication {
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args)  {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(SpringBootStudyApplication.class, args);
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
         String ip = "";
