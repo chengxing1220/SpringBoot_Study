@@ -1,0 +1,9 @@
+server:
+  port: 8999 #指定端口号
+  servlet:
+    context-path: /study # 指定项目上下文路径
+
+# logback是springboot默认使用日志，所以不用配置能正常使用
+logging:
+  file:
+    path: logback.xml

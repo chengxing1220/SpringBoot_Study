@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日志级别排序为： TRACE < DEBUG < INFO < WARN < ERROR 如果设置为WARN,则低于WARN的信息都不会输出 -->
+<!-- scan:默认为true。作用：当设置为true时，如果配置文件发生改变，将会被重新加载。scanPeriod="10 seconds" 刷新频率 10s每次 -->
+<!-- scanPeriod：默认时间间隔为1分钟，默认单位是毫秒，当scan为true时，此属性生效。作用：检测配置文件是否有修改时间间隔。 -->
+<!-- debug：默认为false。作用：当此属性为true时，将打印出logback内部日志信息，实时查看logback运行状态。 -->
+<configuration scan="true" scanPeriod="1 seconds">
+    <!-- contextName用来设置上下文名称。每个logger都关联到logger上下文，默认上下文名称为default。 -->
+    <contextName>SpringBoot_Study</contextName>
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+    <!-- 用来定义变量值，有两个属性name和value。 通过<property>定义的值被插入到logger上下文中，可以使"${}"来使用变量 -->
+    <property name="log.path" value="logs"/>
+    <property name="log.name" value="springboot_study"/>
+
+    <!--日志编码格式为 UTF-8 -->
+    <property name="log.charset" value="utf-8" />
+
+    <!--文件输出打印格式,%d:日期;%thread:线程名;%-5level：级别,从左显示5个字符宽度;%msg:日志消息;%n:换行符-->
+    <property name="log.patternFile" value="%contextName- %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" />
+
+    <!-- 1、控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--black 黑色   red 红色 green 绿色 highlight 高亮  boldMagenta 粗体 %d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%black(%contextName-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %gray(%msg%n)</pattern>
+            <charset>${log.charset}</charset>
+        </encoder>
+    </appender>
+
+
+    <!-- 2、按照轮巡生成日志文件 -->
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${log.patternFile}</pattern>
+            <charset>${log.charset}</charset>
+        </encoder>
+
+        <!-- 循环政策：基于时间政策创建日志文件 -->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            &lt;!&ndash;日志文件输出的文件名 &ndash;&gt;
+            <FileNamePattern>${log.path}/${log.name}.%d{yyyy-MM-dd}.log</FileNamePattern>
+            &lt;!&ndash;日志文件保留天数 &ndash;&gt;
+            &lt;!&ndash; 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每个月滚动，且<maxHistory>是6，则只保存最近6个月的文件，删除之前的旧文件。 &ndash;&gt;
+            <MaxHistory>15</MaxHistory>
+        </rollingPolicy>-->
+
+        <!-- 循环政策：基于时间和大小政策创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名 按日志大小分割一定要带：【%i】 -->
+            <FileNamePattern>${log.path}/${log.name}.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <!--日志文件最大的大小 -->
+            <maxFileSize>1MB</maxFileSize>
+            <!--日志文件保留个数 -->
+            <!-- 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每个天滚动，且<maxHistory>是3，则只保存最近4天的文件，删除之前的旧文件。 -->
+            <MaxHistory>3</MaxHistory>
+        </rollingPolicy>
+        <!-- 此日志文档只记录INFO级别的 -->
+        <!-- LevelFilter： 等级过滤器。当日志级别等于或高于该等级时，过滤器返回NEUTRAL；当日志级别低于临界值时，日志会被拒绝。 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- 2.1 level为ERROR日志，时间和大小滚动输出 -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${log.patternFile}</pattern>
+            <charset>${log.charset}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/${log.name}-error.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <maxFileSize>1MB</maxFileSize>
+            <MaxHistory>3</MaxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 3、日志输出 -->
+    <!-- 3.1开发环境：INFO打印到控制台,ERROR日志生成文件 -->
+    <!--<root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ERROR_FILE" />
+    </root>-->
+    <!-- 3.2生产环境：INFO和ERROR日志生成文件;DEBUG文件生成同理 -->
+    <root level="INFO">
+        <appender-ref ref="INFO_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+        <!--控制台打印-->
+         <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
