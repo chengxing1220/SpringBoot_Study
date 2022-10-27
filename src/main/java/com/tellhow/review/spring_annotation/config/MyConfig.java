@@ -20,12 +20,19 @@ import java.util.ArrayList;
 @Slf4j
 @ComponentScans(value = {@ComponentScan(basePackages = "com.tellhow")})//包扫描
 public class MyConfig {
+
     @Bean
-    public  WorldPojo worldPojo() {
+    public AvenueBranchPojo avenueBranchPojo(){
+        return new AvenueBranchPojo("张三");
+    }
+
+
+    @Bean
+    public  WorldPojo worldPojo(AvenueBranchPojo avenueBranchPojo) {
         WorldPojo worldPojo = new WorldPojo();
         worldPojo.setName("斗气大陆");
         ArrayList<AvenueBranchPojo> avenueBranchPojos = new ArrayList<>();
-        avenueBranchPojos.add(new AvenueBranchPojo("萧族"));
+        avenueBranchPojos.add(avenueBranchPojo);
         worldPojo.setAvenueBranch(avenueBranchPojos);
         return worldPojo;
     }
