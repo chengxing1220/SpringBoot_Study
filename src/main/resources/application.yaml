@@ -7,8 +7,8 @@ server:
 logging:
   file:
     path: logback.xml
-#开启调试模式，可以查看哪些自动配置生效了Positive(生效了)、Negative(没生效)
-debug: true
+#是否开启调试模式，可以查看哪些自动配置生效了Positive(生效了)、Negative(没生效)
+debug: false
 
 #项目加载时排除哪些自动配置类(可能爆红但不影响功能)
 spring:

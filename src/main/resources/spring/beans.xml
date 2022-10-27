@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+      <!--
+        配置包扫描，在配置这之前要先在beans上添加以下配置
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+      -->
+    <context:component-scan base-package="com.tellhow"></context:component-scan>
+    <bean id="worldPojo2" class="com.tellhow.review.spring_xml.pojo.WorldPojo">
+        <property name="name" value="传武世界"></property>
+        <property name="avenueBranch">
+            <list>
+                <ref bean="dynastyBranch"></ref>
+                <ref bean="disasterBranch"></ref>
+                <ref bean="creationBranch"></ref>
+                <ref bean="spiritsBranch"></ref>
+            </list>
+        </property>
+    </bean>
+     <!--道的分支(王朝)-->
+    <bean id="dynastyBranch" class="com.tellhow.review.spring_xml.pojo.AvenueBranchPojo">
+        <property name="name" value="王朝"></property>
+    </bean>
+    <!--道的分支(祸殃)-->
+    <bean id="disasterBranch" class="com.tellhow.review.spring_xml.pojo.AvenueBranchPojo">
+        <property name="name" value="祸殃"></property>
+    </bean>
+    <!--道的分支(万物)-->
+    <bean id="creationBranch" class="com.tellhow.review.spring_xml.pojo.AvenueBranchPojo">
+        <property name="name" value="万物"></property>
+    </bean>
+    <!--道的分支(鬼神)-->
+    <bean id="spiritsBranch" class="com.tellhow.review.spring_xml.pojo.AvenueBranchPojo">
+        <property name="name" value="鬼神"></property>
+    </bean>
+
+</beans>
+
