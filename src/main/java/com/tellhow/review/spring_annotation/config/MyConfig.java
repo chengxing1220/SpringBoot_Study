@@ -14,14 +14,14 @@ import java.util.ArrayList;
  */
 
 /**
- * 创建出来
+ * proxyBeanMethods属性是用来设置MyConfig是否被代理。true的话通过实例
  */
 @Configuration(proxyBeanMethods = true)
 @Slf4j
 @ComponentScans(value = {@ComponentScan(basePackages = "com.tellhow")})//包扫描
 public class MyConfig {
     @Bean
-    public WorldPojo worldPojo() {
+    public  WorldPojo worldPojo() {
         WorldPojo worldPojo = new WorldPojo();
         worldPojo.setName("斗气大陆");
         ArrayList<AvenueBranchPojo> avenueBranchPojos = new ArrayList<>();

@@ -1,5 +1,7 @@
 package com.tellhow;
 
+import com.tellhow.review.spring_annotation.config.MyConfig;
+import com.tellhow.review.spring_xml.pojo.WorldPojo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,6 +35,14 @@ public class SpringBootStudyApplication {
                 "\t项目访问网址: http://" + ip + ":" + port + path + "\n" +
                 "\tRuntimeMXBean object for the Java virtual machine is(项目在虚拟机运行的进程为):" + runName +
                 "\n----------------------------------------------------------------------------------------------------------------------------------------");
+        //WorldPojo worldPojo = applicationContext.getBean("worldPojo",WorldPojo.class);
+        MyConfig bean = applicationContext.getBean(MyConfig.class);
+        System.out.println(bean);
+        WorldPojo worldPojo = bean.worldPojo();
+        System.out.println(worldPojo);
+        WorldPojo worldPojo1 = bean.worldPojo();
+        System.out.println(worldPojo1);
+        System.out.println(worldPojo==worldPojo1);
     }
 
 
