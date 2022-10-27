@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 /**
- * proxyBeanMethods属性是用来设置MyConfig是否被代理。true的话通过实例
+ * proxyBeanMethods属性是用来设置MyConfig配置类是否被代理。true的话通过MyConfig实例.方法获取对象时(非从容器中取)，每次取出来的都是同一个
  */
 @Configuration(proxyBeanMethods = true)
 @Slf4j
