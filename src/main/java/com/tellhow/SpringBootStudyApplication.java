@@ -4,6 +4,7 @@ import com.tellhow.review.spring_annotation.config.MyConfig;
 import com.tellhow.review.spring_xml.pojo.WorldPojo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -14,7 +15,7 @@ import java.net.UnknownHostException;
 
 //scanBasePackages属性:指定包扫描路径
 //exclude属性:如果发现不需要的特定自动配置类正在被应用可以使用@SpringBootApplication的exclude属性属性来禁用它们
-@SpringBootApplication(scanBasePackages = {"com.tellhow"})
+//@SpringBootApplication(scanBasePackages = {"com.tellhow"})
 @Slf4j//日志系统采用  slf4j+logback
 public class SpringBootStudyApplication {
     public static void main(String[] args) {
@@ -35,6 +36,9 @@ public class SpringBootStudyApplication {
                 "\t项目访问网址: http://" + ip + ":" + port + path + "\n" +
                 "\tRuntimeMXBean object for the Java virtual machine is(项目在虚拟机运行的进程为):" + runName +
                 "\n----------------------------------------------------------------------------------------------------------------------------------------");
+        for (String beanDefinitionName : applicationContext.getBeanDefinitionNames()) {
+            log.info(beanDefinitionName);
+        }
     }
 
 
