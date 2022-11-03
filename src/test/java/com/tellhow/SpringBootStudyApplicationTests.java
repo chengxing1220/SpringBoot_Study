@@ -24,7 +24,6 @@ class SpringBootStudyApplicationTests {
         }
     }
 
-
     @Test
     //注解配置元数据
     void testAnnotationContextLoad() {
