@@ -1,6 +1,6 @@
-package com.tellhow.review.spring_annotation.service.impl;
+package com.tellhow.review.spring_annotation.beanaddcontainer.service.impl;
 
-import com.tellhow.review.spring_annotation.service.AnnotationService;
+import com.tellhow.review.spring_annotation.beanaddcontainer.service.AnnotationService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,10 +1,8 @@
 package com.tellhow;
 
-import com.tellhow.review.spring_annotation.config.MyConfig;
-import com.tellhow.review.spring_xml.pojo.WorldPojo;
+import com.tellhow.review.spring_annotation.beanaddcontainer.config.MyConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -35,6 +33,9 @@ class SpringBootStudyApplicationTests {
         for (String beanDefinitionName : applicationContext.getBeanDefinitionNames()) {
             log.info(beanDefinitionName);
         }
+        Object bean = applicationContext.getBean("myFactoryBean");
+        Object bean2 = applicationContext.getBean("myFactoryBean");
+        log.info((bean==bean2)+"");
     }
 
 

@@ -1,16 +1,13 @@
-package com.tellhow.review.spring_annotation.config;
+package com.tellhow.review.spring_annotation.beanaddcontainer.config;
 
-import com.tellhow.review.spring_annotation.filter.MyTypeFilter;
-import com.tellhow.review.spring_xml.pojo.AvenueBranchPojo;
-import com.tellhow.review.spring_xml.pojo.WorldPojo;
+import com.tellhow.review.common.factory.MyFactoryBean;
+import com.tellhow.review.common.pojo.UnitedPojo;
+import com.tellhow.review.spring_annotation.beanaddcontainer.filter.MyTypeFilter;
+import com.tellhow.review.common.pojo.AvenueBranchPojo;
+import com.tellhow.review.common.pojo.WorldPojo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author wujianghao
@@ -37,51 +34,52 @@ import java.util.List;
  *                                            4）FilterType.REGEX根据正则表达式过滤(基本不用、我也不太会)
  *                                            5）FilterType.CUSTOM自定义过滤规则
  */
-@ComponentScan(basePackages = "com.tellhow.review.spring_annotation",
+@ComponentScan(basePackages ={ "com.tellhow.review.spring_annotation"},
         useDefaultFilters = false,
         includeFilters = {@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {MyTypeFilter.class})})
+@Import(value = {UnitedPojo.class,MyImportSector.class,MyImportBeanDefinitionRegistrar.class})
 public class MyConfig {
     /**
      *
-     * ConfigurableBeanFactory.SCOPE_PROTOTYPE//多例模式(每次从容器中获取的对象都不是相同的)，在调用该对象时，才会创建对象到容器中
-     * ConfigurableBeanFactory.SCOPE_SINGLETON //单例模式(每次从容器中获取的对象都是相同的),项目在开始运行的时侯，就会创建对象到容器中
+     * ConfigurableBeanFactory.SCOPE_PROTOTYPE//多例模式(每次从容器中获取的对象都不是相同的)，在调用该对象时，才会创建对象
+     * ConfigurableBeanFactory.SCOPE_SINGLETON //单例模式(每次从容器中获取的对象都是相同的),项目在开始运行的时侯，就会创建对象
      * org.springframework.web.context.WebApplicationContext.SCOPE_REQUEST//同一个请求域下(不用该作用域)
      * org.springframework.web.context.WebApplicationContext.SCOPE_SESSION//同一个Session下(不用该作用域)
      */
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)//多例模式
+    @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)//多例模式
     @Bean("worldPojo")
     public WorldPojo worldPojo() {
-        log.info("传武世界WorldPojo对象开始创建,并创建了万物道分支。。。。。。");
+        log.info("--------传武世界WorldPojo(多例)对象开始创建---------");
         WorldPojo worldPojo = new WorldPojo();
         worldPojo.setName("传武世界");
-        ArrayList<AvenueBranchPojo> avenueBranchPojos = new ArrayList<>();
-        AvenueBranchPojo avenueBranchPojo = creationBranch();
-        avenueBranchPojos.add(avenueBranchPojo);
-        worldPojo.setAvenueBranch(avenueBranchPojos);
         return worldPojo;
     }
 
-    @Lazy//懒加载，因为单例模式下，项目开始运行就创建该对象并就加入到容器中。我们想在用到该对象才创建，只需要加一个@Lazy注解
+    @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)//多例模式
+    @Bean("myFactoryBean")
+    public MyFactoryBean myFactoryBean() {
+        log.info("--------传武世界myFactoryBean(多例)对象开始创建---------");
+        MyFactoryBean myFactoryBean = new MyFactoryBean();
+        return myFactoryBean;
+    }
+
+    @Lazy//懒加载，在单例模式下，项目开始运行就调用下面的方法并创建出该对象。我们想在用到该对象才创建，只需要加一个@Lazy注解
     @Bean("creationBranch")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)//这个bean的作用域
     @Conditional(value = {MyCondition.class})//条件装配注解
     public AvenueBranchPojo creationBranch() {
-        log.info("万物道AvenueBranchPojo对象开始创建。。。。。。。");
-        return new AvenueBranchPojo("万物道");
+        log.info("----------万物道AvenueBranchPojo单例对象开始创建(懒加载)----------");
+        return new AvenueBranchPojo();
     }
+
+
+
     @Lazy
     @Bean("spiritsBranch")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)//作用域
     public AvenueBranchPojo spiritsBranch() {
-        log.info("鬼神道avenueBranchPojo对象开始创建。。。。。。。");
-        return new AvenueBranchPojo("鬼神道");
-    }
-
-    public static void main(String[] args) {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MyConfig.class);
-        WorldPojo world = applicationContext.getBean(WorldPojo.class);
-        log.info("从容器获取WorldPojo对象");
-        AvenueBranchPojo spiritsBranch = applicationContext.getBean("spiritsBranch", AvenueBranchPojo.class);
+        log.info("---------鬼神道avenueBranchPojo单例对象开始创建----------");
+        return new AvenueBranchPojo();
     }
 
 }

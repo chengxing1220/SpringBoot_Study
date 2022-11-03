@@ -1,5 +1,6 @@
-package com.tellhow.review.spring_xml.pojo;
+package com.tellhow.review.common.pojo;
 
+import com.tellhow.review.common.pojo.AvenueBranchPojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class WorldPojo {
-    private String name;//世界的名称
-    private List<AvenueBranchPojo> avenueBranch;//此方世界道的分支
+    private String wId;//此方世界的编号
+    private String name;//此方世界的名称
+    private List<AvenueBranchPojo> avenueBranch;//此方世界所孕育道的分支
 }

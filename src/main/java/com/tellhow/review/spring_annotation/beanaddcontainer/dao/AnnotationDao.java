@@ -1,4 +1,4 @@
-package com.tellhow.review.spring_annotation.dao;
+package com.tellhow.review.spring_annotation.beanaddcontainer.dao;
 
 import org.springframework.stereotype.Repository;
 
