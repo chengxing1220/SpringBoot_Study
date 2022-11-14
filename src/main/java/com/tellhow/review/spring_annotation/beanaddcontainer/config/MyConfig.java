@@ -35,8 +35,9 @@ import org.springframework.context.annotation.*;
  *                                            5）FilterType.CUSTOM自定义过滤规则
  */
 @ComponentScan(basePackages ={ "com.tellhow.review.spring_annotation"},
-        useDefaultFilters = false,
-        includeFilters = {@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {MyTypeFilter.class})})
+        useDefaultFilters = true
+        //,includeFilters = {@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {MyTypeFilter.class})}
+        )
 @Import(value = {UnitedPojo.class,MyImportSector.class,MyImportBeanDefinitionRegistrar.class})
 public class MyConfig {
     /**

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 
+//Spring提供的FactoryBean
 public class MyFactoryBean implements FactoryBean {
 
     @Override
