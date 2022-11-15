@@ -32,12 +32,4 @@ public class MyBeanProcess implements BeanPostProcessor {
         return bean;
     }
 
-    public MyBeanProcess() {
-        log.info("MyBeanProcess利用无参构造创建对象");
-    }
-
-    @PostConstruct
-    public void init(){
-        log.info("MyBeanProcess初始化");
-    }
 }
