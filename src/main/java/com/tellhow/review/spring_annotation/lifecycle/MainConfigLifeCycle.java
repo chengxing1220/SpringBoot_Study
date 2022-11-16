@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Configuration;
  *    1、使用@bean的initMethod属性和destroyMethod分别指定初始化和销毁方法
  *    2、实现InitializingBean并重写afterPropertiesSet()方法【此方法就是初始化方法】, 实现DisposableBean接口并重写destroy()方法【此方法即销毁方法】
  *    3、在方法上加 @PostConstruct注解，指定该方法为初始化方法。在方法上加@PreDestroy注解，指定该方法为销毁方法
- * 三、BeanPostProcessor。指定在bean初始化前和初始化后的调用
+ * 三、BeanPostProcessor。指定在bean初始化方法前和初始化方法后的调用
  *
- * AbstractAutowireCapableBeanFactory类有以下：
+ * AbstractAutowireCapableBeanFactory类调用初始化方法顺序如下：
  *    populateBean(beanName, mbd, instanceWrapper);                  给bean的属性赋值
  * 	  exposedObject = initializeBean(beanName, exposedObject, mbd);  初始化
  *
