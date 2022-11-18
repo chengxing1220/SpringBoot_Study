@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 /**
- * 给属性赋值
+ * 给属性赋值。给属性赋基本数据类型和String类型的值
  */
 @Configuration
 @Slf4j
-@PropertySource(value ={"classpath:/myconfig.properties"})//会将配置文件的值加到环境变量中
+@PropertySource(value ={"classpath:/myconfig.properties"})//会将配置文件的值加到环境变量中，然后使用SPEL表达式从环境变量中获取值
 public class AttributeAssignmentConfig {
 
     @Bean
