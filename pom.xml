@@ -45,6 +45,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>5.3.20</version>
+        </dependency>
+
         <!--
          1、当升级到新的特性版本时，一些属性可能已经被重命名或删除。SpringBoot 提供了一种分析应用程序环境和在启动时打印诊断信息的方法，同时还可以在运行时为您临时迁移属性。若要启用该特性，请在项目中添加以下依赖项
          2、迁移完成请删除该依赖-->
