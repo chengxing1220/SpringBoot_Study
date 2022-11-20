@@ -18,6 +18,7 @@ public class Function {
      * @return
      */
     public String GhostInfestation(String name, String taskName) {
+     //   int q=1/0;
         log.info(name + "执行" + taskName);
         return name + "获取功勋";
     }
